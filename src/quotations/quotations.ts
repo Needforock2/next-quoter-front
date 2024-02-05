@@ -16,10 +16,18 @@ export interface Quote {
   createdAt: string;
   updatedAt: string;
 }
-
 export interface Customer {
+  _id: string;
   first_name: string;
   last_name: string;
+  mail: string;
+  rut: string;
+  street?: string;
+  street_number?: number;
+  country?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+
 }
 
 
@@ -33,6 +41,17 @@ export interface SortedProduct {
   pType: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
   quantity: number;
+}
+export interface Product {
+  _id: string;
+  name: string;
+  description: string;
+  brand: string;
+  code: string;
+  price: number;
+  stock: number;
+  pType: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

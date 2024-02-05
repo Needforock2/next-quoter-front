@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Main, SideBar, TopBar } from '../../components';
+
+import {  SideBar, TopBar } from '../../components';
 
 export const metadata: Metadata = {
   title: "NextQuote",
@@ -146,8 +146,6 @@ export default function DashboardLayout({
               </p>
             </div>
           </div>
-          {/*  <script async defer src="https://buttons.github.io/buttons.js"></script>
-   <script src="https://demo.themesberg.com/windster/app.bundle.js"></script> */}
         </div>
       </>
     );

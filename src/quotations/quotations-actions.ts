@@ -16,4 +16,3 @@ export async function handlePaginator(nextPage: number | null) {
     return quotes.json()
     
 }
-

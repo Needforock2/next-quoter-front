@@ -1,13 +1,22 @@
 import Image from "next/image";
 import React from "react";
-import type { Quote } from '../app/quotations/quotations';
+import type { Quote } from "../quotations";
 
-interface Props extends Quote{}
+interface Props extends Quote {}
 
-export const QuoteItem = ({ customer, status, createdAt, total, number }: Props) => {
-    const date = new Date(createdAt)
-    const fullDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`
-    const formattedPrice = new Intl.NumberFormat('us-US', {style: 'currency', currency:'USD'}).format(total)
+export const QuoteItem = ({
+  customer,
+  status,
+  createdAt,
+  total,
+  number,
+}: Props) => {
+  const date = new Date(createdAt);
+  const fullDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDay()}`;
+  const formattedPrice = new Intl.NumberFormat("us-US", {
+    style: "currency",
+    currency: "USD",
+  }).format(total);
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm ">
