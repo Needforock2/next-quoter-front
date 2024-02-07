@@ -1,13 +1,12 @@
 "use client";
 import React, { ChangeEvent, useState } from "react";
-import type { Customer } from '../quotations';
+import type { Customer } from "../quotations";
 
 interface Props {
-  customers: Customer[] 
+  customers: Customer[];
 }
 
-
-export const DropDownSearch = ({customers}: Props) => {
+export const DropDownSearch = ({ customers }: Props) => {
   const [toggle, setToggle] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [customer, setCustomer] = useState<Customer>({
@@ -25,21 +24,56 @@ export const DropDownSearch = ({customers}: Props) => {
     }
   };
 
+  const handleClick = (serachedCustomer: Customer) => {
+    setCustomer(serachedCustomer);
+    setToggle(false);
+  };
   return (
-    <div className="flex items-center justify-evenly w-full gap-2 ">
-      <input
-        className="w-8/12 px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none"
-        type="text"
-        placeholder="Customer"
-        disabled={true}
-        value={customer ? customer.first_name + " " + customer.last_name : ""}
-      />
-      <div className="w-4/12 relative group">
+    <div className="grid gap-2 p-2 lg:grid-cols-5 md:grid-cols-1">
+      <div className="col-span-2 col-start-3 flex flex-col gap-2">
+        <div className=" flex flex-col">
+          <label className="w-2/12">Customer</label>
+
+          <input
+            className=" px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none"
+            type="text"
+            placeholder="Customer"
+            disabled={true}
+            value={
+              customer ? customer.first_name + " " + customer.last_name : ""
+            }
+          />
+        </div>
+        <div className=" flex flex-col">
+          <label className="w-2/12">Email</label>
+          <input
+            className=" px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none"
+            type="text"
+            placeholder="Email"
+            disabled={true}
+            value={customer ? customer.mail : ""}
+          />
+        </div>
+        <div className=" flex flex-col">
+          <label className="w-2/12">RUT</label>
+
+          <input
+            className="px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none"
+            type="text"
+            placeholder="RUT"
+            disabled={true}
+            value={customer ? customer.rut : ""}
+          />
+        </div>
+      </div>
+
+      <div className="col-span-1 col-start-5 relative group flex flex-col">
+        <label className="w-2/12">Search:</label>
         <input
           onChange={(e) => handleSearchInput(e)}
-          className="px-4 py-2 text-gray-800 border rounded-md  border-gray-300 focus:outline-none"
+          className="px-4 py-2 max-w-full text-gray-800 border rounded-md  border-gray-300 focus:outline-none"
           type="text"
-          placeholder="Search Customer Name"
+          placeholder="Customer Name"
         />
         <div
           id="dropdown-menu"
@@ -57,10 +91,7 @@ export const DropDownSearch = ({customers}: Props) => {
                   : "hidden"
               } px-4 py-2 text-gray-700 hover:bg-gray-100 active:bg-blue-100 cursor-pointer rounded-md`}
               key={customer.first_name + " " + customer.last_name}
-              onClick={() => {
-                setCustomer(customer);
-                setToggle(false);
-              }}
+              onClick={() => handleClick(customer)}
             >
               {customer.first_name + " " + customer.last_name}
             </a>

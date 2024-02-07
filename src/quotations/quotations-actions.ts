@@ -1,18 +1,42 @@
-'use server'
+import { getCookie, hasCookie, setCookie } from "cookies-next";
 
+export const getProdListCookie = () => {
+  if (hasCookie("prodList")) {
+    const cookieProdList = JSON.parse(
+      (getCookie("prodList") as string) ?? "{}"
+    );
+    return cookieProdList;
+  }
+  return {};
+};
 
-
-export async function searchQuoteNmbr(id: number){
-    const quote = await fetch(`http://localhost:8080/api/quote?limit=5&page=1&quoteId=${id}`)
-    return quote.json()
-    
+export function setProdListCookie(id: string) {
+  console.log("ejecutando add")
+  const cookieProdList = getProdListCookie();
+  if (cookieProdList[id]) {
+    cookieProdList[id] += 1;
+  } else {
+    cookieProdList[id] = 1;
+  }
+  setCookie("prodList", JSON.stringify(cookieProdList));
 }
 
-export async function handlePaginator(nextPage: number | null) {
-    const quotes = await fetch(
-      `http://localhost:8080/api/quote?limit=5&page=${nextPage}`
-    );
+export function removeProductFromList(id: string) {
+  const cookieProdList = getProdListCookie();
+  if (cookieProdList[id]) {
+    delete cookieProdList[id];
+  }
+  setCookie("prodList", JSON.stringify(cookieProdList));
+}
 
-    return quotes.json()
+export function removeOneItemFromList(id: string) {
+  const cookieProdList = getProdListCookie();
+  console.log({ cookieProdList });
+  cookieProdList[id] -= 1;
+  if (cookieProdList[id] === 0) {
+    delete cookieProdList[id];
+
     
+  }
+  setCookie("prodList", JSON.stringify(cookieProdList));
 }

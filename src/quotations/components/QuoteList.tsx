@@ -5,7 +5,7 @@ import type { Quote, Quotes } from "../quotations";
 import {
   handlePaginator,
   searchQuoteNmbr,
-} from "@/quotations/quotations-actions";
+} from "@/quotations/quotations-Server-actions";
 import { Paginator } from "../../components/Paginator";
 import { CreateFilterBar } from "../../components/CreateFilterBar";
 
