@@ -8,9 +8,7 @@ export const metadata = {
 };
 
 function CreateQuotations() {
-   const cookieStore = cookies();
-  const prodList = cookieStore.get("prodList");
-  console.log(prodList);
+
   return (
 
     <CreateQuoteForm/>

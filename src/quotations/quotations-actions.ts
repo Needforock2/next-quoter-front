@@ -1,4 +1,4 @@
-import { getCookie, hasCookie, setCookie } from "cookies-next";
+import { deleteCookie, getCookie, hasCookie, setCookie } from "cookies-next";
 
 export const getProdListCookie = () => {
   if (hasCookie("prodList")) {
@@ -11,7 +11,7 @@ export const getProdListCookie = () => {
 };
 
 export function setProdListCookie(id: string) {
-  console.log("ejecutando add")
+
   const cookieProdList = getProdListCookie();
   if (cookieProdList[id]) {
     cookieProdList[id] += 1;
@@ -31,7 +31,6 @@ export function removeProductFromList(id: string) {
 
 export function removeOneItemFromList(id: string) {
   const cookieProdList = getProdListCookie();
-  console.log({ cookieProdList });
   cookieProdList[id] -= 1;
   if (cookieProdList[id] === 0) {
     delete cookieProdList[id];
@@ -39,4 +38,16 @@ export function removeOneItemFromList(id: string) {
     
   }
   setCookie("prodList", JSON.stringify(cookieProdList));
+}
+
+export function setCidCookie(id: string) {
+  const newCookie = {
+    cid: id
+  };
+  setCookie("cid", JSON.stringify(newCookie));
+}
+
+export function clearCookies() {
+  deleteCookie('cid')
+  deleteCookie("prodList");
 }

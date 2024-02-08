@@ -2,6 +2,9 @@ import React from "react";
 import { DropDownSearch } from "./DropDownSearch";
 import { ProductList } from "./ProductList";
 import { Customer, Product } from "../quotations";
+import { CreateQuoteButton } from "./CreateQuoteButton";
+import { cookies } from "next/headers";
+import { clearCookies } from "../quotations-actions";
 
 const getCustomers = async (): Promise<Customer[]> => {
   const resp = await fetch("http://localhost:8080/api/customer/");
@@ -12,7 +15,11 @@ const getProducts = async (): Promise<Product[]> => {
   return resp.json();
 };
 
+
 export const CreateQuoteForm = async () => {
+
+
+
   const customers = await getCustomers();
   const products = await getProducts();
 
@@ -41,13 +48,7 @@ export const CreateQuoteForm = async () => {
                 <ProductList products={products} />
               </div>
             </div>
-            <div className="md:col-span-5 text-right mt-10">
-              <div className="inline-flex items-end">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                  Submit
-                </button>
-              </div>
-            </div>
+            <CreateQuoteButton/>
           </div>
         </div>
       </div>

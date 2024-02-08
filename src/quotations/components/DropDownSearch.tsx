@@ -1,6 +1,7 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import type { Customer } from "../quotations";
+import { clearCookies, setCidCookie } from "../quotations-actions";
 
 interface Props {
   customers: Customer[];
@@ -17,6 +18,11 @@ export const DropDownSearch = ({ customers }: Props) => {
     rut: "",
   });
 
+   useEffect(() => {   
+      clearCookies();
+   }, [])
+   
+
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value != "") {
       setToggle(true);
@@ -25,6 +31,7 @@ export const DropDownSearch = ({ customers }: Props) => {
   };
 
   const handleClick = (serachedCustomer: Customer) => {
+    setCidCookie(serachedCustomer._id)
     setCustomer(serachedCustomer);
     setToggle(false);
   };
