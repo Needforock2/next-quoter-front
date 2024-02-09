@@ -27,7 +27,7 @@ export async function handlePaginator(nextPage: number | null) {
   return quotes.json();
 }
 
-export async function createQuote() {
+export async function sendQuoteToDb(qid: string) {
 
   const cookieStore = cookies();
   const prodListCookies = cookieStore.get("prodList");
@@ -49,14 +49,26 @@ export async function createQuote() {
     products,
     customer_id: JSON.parse(customerCookie.value).cid
   };
-  const response = fetch("http://localhost:8080/api/quote/", {
-    method: "POST",
-    body: JSON.stringify(postBody),
-    headers: { "Content-Type": "application/json" },
-  }).then((res) => res.json());
+  let response
+  if (qid === '') {
+      response = fetch("http://localhost:8080/api/quote/", {
+        method: "POST",
+        body: JSON.stringify(postBody),
+        headers: { "Content-Type": "application/json" },
+      }).then((res) => res.json());
+  } else if (qid !== "") {
+    response = fetch(`http://localhost:8080/api/quote/${qid}`, {
+      method: "PUT",
+      body: JSON.stringify(postBody),
+      headers: { "Content-Type": "application/json" },
+    }).then((res) => res.json());
+  }
+
   clearCookies()
   return response
 }
+
+
 
 export async function redirection(destination: string) {
   redirect(destination);

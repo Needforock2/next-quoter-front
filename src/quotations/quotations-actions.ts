@@ -10,15 +10,23 @@ export const getProdListCookie = () => {
   return {};
 };
 
-export function setProdListCookie(id: string) {
+export function setProdListCookie(id: string, quantity: number) {
 
   const cookieProdList = getProdListCookie();
-  if (cookieProdList[id]) {
-    cookieProdList[id] += 1;
-  } else {
-    cookieProdList[id] = 1;
+  if (id !== '') {
+    if (quantity) {
+       cookieProdList[id] = quantity
+    } else {
+       if (cookieProdList[id]) {
+         cookieProdList[id] += 1;
+       } else {
+         cookieProdList[id] = 1;
+       }
+    }
+    
+     setCookie("prodList", JSON.stringify(cookieProdList));
   }
-  setCookie("prodList", JSON.stringify(cookieProdList));
+ 
 }
 
 export function removeProductFromList(id: string) {

@@ -50,7 +50,7 @@ export interface Product {
   brand: string;
   code: string;
   price: number;
-  stock: number;
+  stock?: number;
   pType: string;
   createdAt?: Date | undefined;
   updatedAt?: Date | undefined;

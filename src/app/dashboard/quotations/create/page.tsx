@@ -10,9 +10,7 @@ export const metadata = {
 function CreateQuotations() {
 
   return (
-
-    <CreateQuoteForm/>
-    
+    <CreateQuoteForm/>   
 
   )
 }

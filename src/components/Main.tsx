@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react'
 
+"https://tailwindcomponents.com/component/tailwind-css-admin-dashboard-layout";
 
 export function Main() {
   return (

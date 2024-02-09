@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import type { Customer, Product, SortedProduct } from "../quotations";
 import { Counter } from "./Counter";
 import { useRouter } from "next/navigation";
@@ -14,20 +14,23 @@ interface Props {
   products: Product[];
   addOneProdItem: (prod: SortedProduct) => void;
   removeProductItem: (item: number, prod: Product) => void;
-  item: number;
+  quotedProd?: SortedProduct
+  index: number
 }
 
 export const ProductItem = ({
   products,
   addOneProdItem,
   removeProductItem,
-  item,
+  quotedProd,
+  index
 }: Props) => {
+
   const router = useRouter();
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(quotedProd&&quotedProd.quantity  || 0 );
   const [toggle, setToggle] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [product, setProduct] = useState<Product>({
+  const [product, setProduct] = useState<Product>(quotedProd ||{
     _id: "",
     name: "",
     description: "",
@@ -37,6 +40,13 @@ export const ProductItem = ({
     stock: 0,
     pType: "",
   });
+  
+  useEffect(() => {
+    if (quotedProd) {
+      setProduct(quotedProd);
+      setProdListCookie(quotedProd._id, quotedProd.quantity);
+    }
+  }, [quotedProd]);
 
   const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.value != "") {
@@ -62,7 +72,7 @@ export const ProductItem = ({
   const addQty = () => {
     setQty(qty + 1);
     if (product._id) {
-      setProdListCookie(product._id);
+      setProdListCookie(product._id, 0);
       router.refresh();
     }
   };
@@ -167,7 +177,7 @@ export const ProductItem = ({
                     ? `hover:cursor-pointer`
                     : "hover:cursor-default"
                 }
-                onClick={() => onRemoveProdItem(item, product)}
+                onClick={() => onRemoveProdItem(index, product)}
               >
                 <IoTrashSharp size={20} />
               </div>

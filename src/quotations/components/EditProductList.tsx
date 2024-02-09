@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import type { Product, SortedProduct } from "../quotations";
+import type { Customer, Product, SortedProduct } from "../quotations";
 import { useRouter } from "next/navigation";
 import { ProductItem } from "./ProductItem";
+
 import {
   removeProductFromList,
   setProdListCookie,
@@ -10,11 +11,23 @@ import {
 
 interface Props {
   products: Product[];
+  quotedProds: SortedProduct[];
 }
 
-export const ProductList = ({ products }: Props) => {
-    const router = useRouter()
-  const [productList, setProductList] = useState<SortedProduct[]>([]);
+export const EditProductList = ({ products, quotedProds }: Props) => {
+  const emptyProd: SortedProduct = {
+    _id: "",
+    name: "",
+    description: "",
+    brand: "",
+    code: "",
+    price: 0,
+    pType: "",
+    quantity: 0,
+  };
+
+  const router = useRouter();
+  const [productList, setProductList] = useState([...quotedProds, emptyProd] || []);
   const [productQty, setProductQty] = useState([0]);
 
   const addOneProdItem = (product: SortedProduct) => {
@@ -23,8 +36,8 @@ export const ProductList = ({ products }: Props) => {
       return [...productQty, nextNumber];
     });
     setProductList([...productList, product]);
-      setProdListCookie(product._id,0);
-      router.refresh()
+    setProdListCookie(product._id, 0);
+    router.refresh();
   };
 
   const removeProductItem = (item: number, product: Product) => {
@@ -50,13 +63,14 @@ export const ProductList = ({ products }: Props) => {
 
   return (
     <>
-      {productQty.map((item, index) => (
+      {productList.map((item, index) => (
         <ProductItem
-          key={item}
+          key={item._id}
           index={index}
           products={products}
           removeProductItem={removeProductItem}
           addOneProdItem={addOneProdItem}
+          quotedProd={item}
         />
       ))}
     </>

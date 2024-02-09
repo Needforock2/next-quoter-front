@@ -9,6 +9,8 @@ import {
 import { Paginator } from "../../components/Paginator";
 import { CreateFilterBar } from "../../components/CreateFilterBar";
 
+"https://tailwindcomponents.com/component/list-order-product";
+
 interface Props {
   quotesObject: Quotes;
 }
@@ -44,25 +46,28 @@ export function QuoteList({ quotesObject }: Props) {
           <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
             <table className="min-w-full leading-normal min-h-[50vh]">
               <thead>
-                <tr>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                <tr className="grid grid-cols-12">
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-3">
                     Customer
                   </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-3">
                     Total $
                   </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    Created at
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-2">
+                    Date Quoted
                   </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                    QuoteId
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-1">
+                    Quote Id
                   </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-2">
                     Status
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-1">
+                    Options
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="h-[60vh]">
                 {quoteObject.quotes.map((quote) => (
                   <QuoteItem key={quote._id} {...quote} />
                 ))}
