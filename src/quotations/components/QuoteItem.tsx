@@ -1,25 +1,53 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import type { Quote } from "../quotations";
 
+
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { handleDeleteQuote, redirection } from "../quotations-Server-actions";
+import Swal from "sweetalert2";
 
-import { redirection } from "../quotations-Server-actions";
+interface Props extends Quote {
 
-interface Props extends Quote { }
 
-const handleEdit = (qid: string) => {
-  console.log("hola")
-  redirection(`/dashboard/quotations/edit/${qid}`);
 }
+
 export const QuoteItem = ({
   customer,
   status,
   createdAt,
   total,
   number,
-  _id
+  _id,
+
 }: Props) => {
+  const handleEdit = (qid: string) => {
+    redirection(`/dashboard/quotations/edit/${qid}`);
+  };
+
+
+  const handleDelete = async () => {
+    const res = await handleDeleteQuote(_id);
+
+    if (res.message === "Quote deleted") {
+      Swal.fire({
+        title: "Success!",
+        text: res.message,
+        icon: "success",
+        confirmButtonText: "Cool",
+      });
+      // redirection(`/dashboard`);
+
+    } else {
+      Swal.fire({
+        title: "Error!",
+        text: "There is on error",
+        icon: "error",
+        confirmButtonText: "Confirm",
+      });
+    }
+  };
+
   const date = new Date(createdAt);
   const fullDate = `${date.getFullYear()}-${
     date.getMonth() + 1
@@ -73,7 +101,11 @@ export const QuoteItem = ({
             size={20}
             className="hover:cursor-pointer"
           />
-          <AiOutlineDelete size={20} className="hover:cursor-pointer" />
+          <AiOutlineDelete
+            onClick={() => handleDelete()}
+            size={20}
+            className="hover:cursor-pointer"
+          />
         </div>
       </td>
     </tr>

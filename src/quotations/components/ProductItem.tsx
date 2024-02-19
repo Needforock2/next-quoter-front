@@ -14,8 +14,9 @@ interface Props {
   products: Product[];
   addOneProdItem: (prod: SortedProduct) => void;
   removeProductItem: (item: number, prod: Product) => void;
-  quotedProd?: SortedProduct
-  index: number
+  quotedProd?: SortedProduct;
+  index: number;
+  sumarProd: (value: SortedProduct) => void;
 }
 
 export const ProductItem = ({
@@ -23,24 +24,26 @@ export const ProductItem = ({
   addOneProdItem,
   removeProductItem,
   quotedProd,
-  index
+  index,
+  sumarProd,
 }: Props) => {
-
   const router = useRouter();
-  const [qty, setQty] = useState(quotedProd&&quotedProd.quantity  || 0 );
+  const [qty, setQty] = useState((quotedProd && quotedProd.quantity) || 0);
   const [toggle, setToggle] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [product, setProduct] = useState<Product>(quotedProd ||{
-    _id: "",
-    name: "",
-    description: "",
-    brand: "",
-    code: "",
-    price: 0,
-    stock: 0,
-    pType: "",
-  });
-  
+  const [product, setProduct] = useState<Product>(
+    quotedProd || {
+      _id: "",
+      name: "",
+      description: "",
+      brand: "",
+      code: "",
+      price: 0,
+      stock: 0,
+      pType: "",
+    }
+  );
+
   useEffect(() => {
     if (quotedProd) {
       setProduct(quotedProd);
@@ -71,6 +74,11 @@ export const ProductItem = ({
 
   const addQty = () => {
     setQty(qty + 1);
+    const sortedProd: SortedProduct = {
+      ...product,
+      quantity: qty + 1,
+    };
+    sumarProd(sortedProd);
     if (product._id) {
       setProdListCookie(product._id, 0);
       router.refresh();
@@ -80,6 +88,11 @@ export const ProductItem = ({
   const removeQty = () => {
     if (qty > 0 && product._id) {
       setQty(qty - 1);
+      const sortedProd: SortedProduct = {
+        ...product,
+        quantity: qty - 1,
+      };
+      sumarProd(sortedProd);
       removeOneItemFromList(product._id);
       router.refresh();
     }

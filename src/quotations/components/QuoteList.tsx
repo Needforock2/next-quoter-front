@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { QuoteItem } from "../../components";
 import type { Quote, Quotes } from "../quotations";
 import {
@@ -8,6 +8,7 @@ import {
 } from "@/quotations/quotations-Server-actions";
 import { Paginator } from "../../components/Paginator";
 import { CreateFilterBar } from "../../components/CreateFilterBar";
+import { useRouter } from "next/navigation";
 
 "https://tailwindcomponents.com/component/list-order-product";
 
@@ -15,9 +16,16 @@ interface Props {
   quotesObject: Quotes;
 }
 
+
+
 export function QuoteList({ quotesObject }: Props) {
   const [quoteObject, setQuoteObject] = useState(quotesObject);
   const [quoteId, setQuoteId] = useState(0);
+
+
+  useEffect(() => {
+  setQuoteObject(quotesObject)
+}, [quotesObject]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target) {
@@ -34,6 +42,10 @@ export function QuoteList({ quotesObject }: Props) {
 
     setQuoteObject(quoteObjectPaginate);
   };
+
+
+
+
 
   return (
     <div className="bg-white p-8 rounded-md w-full ">
@@ -69,7 +81,7 @@ export function QuoteList({ quotesObject }: Props) {
               </thead>
               <tbody className="h-[60vh]">
                 {quoteObject.quotes.map((quote) => (
-                  <QuoteItem key={quote._id} {...quote} />
+                  <QuoteItem key={quote._id} {...quote}  />
                 ))}
               </tbody>
             </table>

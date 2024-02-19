@@ -40,6 +40,7 @@ export const Counter = ({ quantity, prodId , addQty, removeQty, setQty}: Props) 
           type="number"
           className="border  bg-slate-100 outline-none max-w-12 p-2 text-center"
           value={quantity}
+          disabled
           onChange={(e) => setQty(Number(e.target.value))}
         />
         <div className="bg-blue-500 hover:bg-blue-700 hover:cursor-pointer flex justify-center items-center min-h-[37.6px]  border">

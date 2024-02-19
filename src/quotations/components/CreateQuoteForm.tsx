@@ -3,8 +3,7 @@ import { DropDownSearch } from "./DropDownSearch";
 import { ProductList } from "./ProductList";
 import { Customer, Product } from "../quotations";
 import { CreateQuoteButton } from "./CreateQuoteButton";
-import { cookies } from "next/headers";
-import { clearCookies } from "../quotations-actions";
+import { CancelButton } from "./CancelButton";
 
 const getCustomers = async (): Promise<Customer[]> => {
   const resp = await fetch("http://localhost:8080/api/customer/");
@@ -15,11 +14,7 @@ const getProducts = async (): Promise<Product[]> => {
   return resp.json();
 };
 
-
 export const CreateQuoteForm = async () => {
-
-
-
   const customers = await getCustomers();
   const products = await getProducts();
 
@@ -48,7 +43,10 @@ export const CreateQuoteForm = async () => {
                 <ProductList products={products} />
               </div>
             </div>
-            <CreateQuoteButton qid={""}/>
+            <div className=" flex gap-3 justify-end">
+              <CancelButton />
+              <CreateQuoteButton qid={""} />
+            </div>
           </div>
         </div>
       </div>

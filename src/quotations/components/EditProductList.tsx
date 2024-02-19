@@ -60,7 +60,22 @@ export const EditProductList = ({ products, quotedProds }: Props) => {
       return updatedProdList;
     });
   };
+    const sumarProd = (product: SortedProduct) => {
+      setProductList((prevProdList) => {
+        const index = prevProdList.findIndex(
+          (item) => item._id === product._id
+        );
+        if (index !== -1) {
+          prevProdList[index].quantity = product.quantity;
+        }
+        return prevProdList;
+      });
+    };
 
+ const total = productList.reduce(
+   (acc, prod) => acc + prod.price * prod.quantity,
+   0
+ );
   return (
     <>
       {productList.map((item, index) => (
@@ -71,8 +86,14 @@ export const EditProductList = ({ products, quotedProds }: Props) => {
           removeProductItem={removeProductItem}
           addOneProdItem={addOneProdItem}
           quotedProd={item}
+          sumarProd={sumarProd}
         />
       ))}
+      <div className="grid lg:grid-cols-3 mt-3">
+        <span className="col-span-2 col-start-2 px-3 text-2xl">
+          Grand Total: ${total}
+        </span>
+      </div>
     </>
   );
 };
