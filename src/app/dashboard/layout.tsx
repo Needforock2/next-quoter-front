@@ -1,18 +1,26 @@
 import type { Metadata } from "next";
 
 import {  SideBar, TopBar } from '../../components';
+import { AuthProvider } from "../auth/components/AuthProvider";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { authOptions } from "../api/auth/[...nextauth]/authOptions";
+
 
 export const metadata: Metadata = {
   title: "NextQuote",
   description: "NextQuote",
 };
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
-}) {
+  }) {
+  
+      const session = await getServerSession(authOptions);
+      !session && redirect("/api/auth/signin");
     return (
-      <>
+      <AuthProvider>
         <div>
         <TopBar/>
           <div className="flex overflow-hidden bg-white pt-16">
@@ -147,7 +155,7 @@ export default function DashboardLayout({
             </div>
           </div>
         </div>
-      </>
+      </AuthProvider>
     );
 }
  

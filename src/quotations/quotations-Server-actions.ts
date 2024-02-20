@@ -3,30 +3,46 @@ import { cookies } from "next/headers";
 import { clearCookies } from "./quotations-actions";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { create_token } from "@/app/auth/actions/auth-actions";
 
 interface ProdCookie {
   [id: string]: number;
 }
 
+
+
 export async function searchQuoteNmbr(id: number) {
+    const authToken = await create_token();
   const quote = await fetch(
-    `http://localhost:8080/api/quote?limit=5&page=1&quoteId=${id}`
+    `http://localhost:8080/api/quote?limit=5&page=1&quoteId=${id}`,
+    {
+      headers: {
+        Authorization: authToken!,
+      },
+    }
   );
   return quote.json();
 }
 
 export async function handlePaginator(nextPage: number | null) {
+    const authToken = await create_token();
   const quotes = await fetch(
-    `http://localhost:8080/api/quote?limit=5&page=${nextPage}`
+    `http://localhost:8080/api/quote?limit=5&page=${nextPage}`,
+    {
+      headers: {
+        Authorization: authToken!,
+      },
+    }
   );
 
   return quotes.json();
 }
 
 export async function handleDeleteQuote(qid: string) {
+    const authToken = await create_token();
   const response = await fetch(`http://localhost:8080/api/quote/${qid}`, {
     method: "DELETE",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", Authorization: authToken! },
   });
   revalidatePath("/dashboard/quotations");
 
@@ -34,6 +50,7 @@ export async function handleDeleteQuote(qid: string) {
 }
 
 export async function sendQuoteToDb(qid: string) {
+      const authToken = await create_token();
   const cookieStore = cookies();
   const prodListCookies = cookieStore.get("prodList");
   const customerCookie = cookieStore.get("cid");
@@ -59,13 +76,13 @@ export async function sendQuoteToDb(qid: string) {
     response = fetch("http://localhost:8080/api/quote/", {
       method: "POST",
       body: JSON.stringify(postBody),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Authorization: authToken! },
     }).then((res) => res.json());
   } else if (qid !== "") {
     response = fetch(`http://localhost:8080/api/quote/${qid}`, {
       method: "PUT",
       body: JSON.stringify(postBody),
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", Authorization: authToken! },
     }).then((res) => res.json());
   }
 

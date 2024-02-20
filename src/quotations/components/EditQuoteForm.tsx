@@ -7,13 +7,24 @@ import { cookies } from "next/headers";
 import { clearCookies } from "../quotations-actions";
 import { EditProductList } from "./EditProductList";
 import { CancelButton } from "./CancelButton";
+import { create_token } from "@/app/auth/actions/auth-actions";
 
 const getCustomers = async (): Promise<Customer[]> => {
-  const resp = await fetch("http://localhost:8080/api/customer/");
+  const authToken = await create_token();
+  const resp = await fetch("http://localhost:8080/api/customer/", {
+    headers: {
+      Authorization: authToken!,
+    },
+  });
   return resp.json();
 };
 const getProducts = async (): Promise<Product[]> => {
-  const resp = await fetch("http://localhost:8080/api/product");
+  const authToken = await create_token();
+  const resp = await fetch("http://localhost:8080/api/product", {
+    headers: {
+      Authorization: authToken!,
+    },
+  });
   return resp.json();
 };
 

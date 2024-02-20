@@ -8,7 +8,7 @@ import {
   setProdListCookie,
   getProdListCookie
 } from "../quotations-actions";
-import { ImInsertTemplate } from "react-icons/im";
+
 
 
 interface Props {

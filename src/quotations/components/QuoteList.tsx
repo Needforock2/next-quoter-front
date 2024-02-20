@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 "https://tailwindcomponents.com/component/list-order-product";
 
 interface Props {
-  quotesObject: Quotes;
+  quotesObject: Quotes ;
 }
 
 
@@ -80,7 +80,7 @@ export function QuoteList({ quotesObject }: Props) {
                 </tr>
               </thead>
               <tbody className="h-[60vh]">
-                {quoteObject.quotes.map((quote) => (
+                {quoteObject?.quotes.map((quote) => (
                   <QuoteItem key={quote._id} {...quote}  />
                 ))}
               </tbody>
