@@ -17,6 +17,7 @@ export const DropDownSearch = ({ customers, quotedCustomer }: Props) => {
     last_name: "",
     mail: "",
     rut: "",
+    image: ''
   });
 
   useEffect(() => {

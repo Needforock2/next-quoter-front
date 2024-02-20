@@ -21,6 +21,8 @@ export const QuoteItem = ({
   _id,
 
 }: Props) => {
+
+
   const handleEdit = (qid: string) => {
     redirection(`/dashboard/quotations/edit/${qid}`);
   };
@@ -63,7 +65,7 @@ export const QuoteItem = ({
           <div className="flex-shrink-0 w-10 h-10">
             <Image
               className="w-full h-full rounded-full"
-              src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2.2&w=160&h=160&q=80"
+              src={customer[0].image}
               alt=""
               width={30}
               height={30}

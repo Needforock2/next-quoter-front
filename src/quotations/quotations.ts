@@ -22,6 +22,7 @@ export interface Customer {
   last_name: string;
   mail: string;
   rut: string;
+  image: string;
   street?: string;
   street_number?: number;
   country?: string;

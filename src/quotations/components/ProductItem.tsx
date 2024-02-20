@@ -114,7 +114,7 @@ export const ProductItem = ({
             type="text"
             placeholder="Customer"
             disabled={true}
-            value={product ? product.brand + " " + product.description : ""}
+            value={product ? product.brand + " " + product.name : ""}
           />
         </div>
         {/* counter */}
@@ -155,7 +155,7 @@ export const ProductItem = ({
                 key={product._id}
                 onClick={() => handleClick(product)}
               >
-                {product.brand + " " + product.description}
+                {product.name}
               </a>
             ))}
           </div>

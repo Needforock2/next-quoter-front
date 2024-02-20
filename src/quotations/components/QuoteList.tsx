@@ -46,7 +46,6 @@ export function QuoteList({ quotesObject }: Props) {
 
 
 
-
   return (
     <div className="bg-white p-8 rounded-md w-full ">
       <CreateFilterBar
