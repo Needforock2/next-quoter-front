@@ -8,24 +8,21 @@ import {
 } from "@/quotations/quotations-Server-actions";
 import { Paginator } from "../../components/Paginator";
 import { CreateFilterBar } from "../../components/CreateFilterBar";
-import { useRouter } from "next/navigation";
 
-"https://tailwindcomponents.com/component/list-order-product";
+
+("https://tailwindcomponents.com/component/list-order-product");
 
 interface Props {
-  quotesObject: Quotes ;
+  quotesObject: Quotes;
 }
-
-
 
 export function QuoteList({ quotesObject }: Props) {
   const [quoteObject, setQuoteObject] = useState(quotesObject);
   const [quoteId, setQuoteId] = useState(0);
 
-
   useEffect(() => {
-  setQuoteObject(quotesObject)
-}, [quotesObject]);
+    setQuoteObject(quotesObject);
+  }, [quotesObject]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target) {
@@ -38,19 +35,17 @@ export function QuoteList({ quotesObject }: Props) {
   };
 
   const handlePagine = async (page: number | null) => {
-    const quoteObjectPaginate = await handlePaginator(page);
+    const quoteObjectPaginate = await handlePaginator(page, "quote");
 
     setQuoteObject(quoteObjectPaginate);
   };
-
-
-
 
   return (
     <div className="bg-white p-8 rounded-md w-full ">
       <CreateFilterBar
         handleChange={handleChange}
         handleSubmit={handleSubmit}
+        module="Quotations"
       />
       <div>
         <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -58,17 +53,17 @@ export function QuoteList({ quotesObject }: Props) {
             <table className="min-w-full leading-normal min-h-[50vh]">
               <thead>
                 <tr className="grid grid-cols-12">
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-1">
+                    Quote Id
+                  </th>
+                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-2">
+                    Date Quoted
+                  </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-3">
                     Customer
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-3">
                     Total $
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-2">
-                    Date Quoted
-                  </th>
-                  <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-1">
-                    Quote Id
                   </th>
                   <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-xs font-semibold text-gray-600 uppercase tracking-wider text-center col-span-2">
                     Status
@@ -80,7 +75,7 @@ export function QuoteList({ quotesObject }: Props) {
               </thead>
               <tbody className="h-[60vh]">
                 {quoteObject?.quotes.map((quote) => (
-                  <QuoteItem key={quote._id} {...quote}  />
+                  <QuoteItem key={quote._id} {...quote} />
                 ))}
               </tbody>
             </table>

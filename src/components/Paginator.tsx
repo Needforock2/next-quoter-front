@@ -7,7 +7,9 @@ interface Props{
     totalPages: number
 }
 
-export function Paginator({handlePagine, prevPage, nextPage, totalPages}: Props) {
+export function Paginator({ handlePagine, prevPage, nextPage, totalPages }: Props) {
+
+
   return (
     <div className="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between          ">
       <span className="text-xs xs:text-sm text-gray-900">

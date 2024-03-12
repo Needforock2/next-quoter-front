@@ -28,6 +28,11 @@ const menuItems: MenuItems[] = [
     icon: <IoMdPaper size={20} />,
   },
   {
+    path: "/dashboard/products",
+    title: "Products",
+    icon: <IoBasketOutline size={20} />,
+  },
+  {
     path: "/dashboard/customers",
     title: "Customers",
     icon: <HiOutlineUserGroup size={20} />,
@@ -36,11 +41,6 @@ const menuItems: MenuItems[] = [
     path: "/dashboard/services",
     title: "Services",
     icon: <HiOutlineWrenchScrewdriver size={20} />,
-  },
-  {
-    path: "/dashboard/products",
-    title: "Products",
-    icon: <IoBasketOutline size={20} />,
   },
 ];
 export async function SideBar() {

@@ -5,14 +5,15 @@ import Link from 'next/link';
 interface Props {
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleSubmit: () => {};
+  module: string
 }
 
-export const CreateFilterBar = ({handleChange, handleSubmit}: Props) => {
+export const CreateFilterBar = ({handleChange, handleSubmit, module}: Props) => {
   return (
     <div className=" flex items-center justify-between pb-6">
       <div>
-        <h2 className="text-gray-600 font-semibold">Quotations</h2>
-        <span className="text-xs">All quotations items</span>
+        <h2 className="text-gray-600 font-semibold">{module}</h2>
+        <span className="text-xs">All {module} items</span>
       </div>
       <div className="flex bg-gray-50 items-center p-2 rounded-md">
         <svg
@@ -34,7 +35,7 @@ export const CreateFilterBar = ({handleChange, handleSubmit}: Props) => {
           type="text"
           name=""
           id=""
-          placeholder="Quote Id..."
+          placeholder={module === 'Quotations'?"Quote Id...": "Product Name"}
         />
       </div>
       <div className="lg:ml-40 ml-10 space-x-8">
@@ -42,7 +43,7 @@ export const CreateFilterBar = ({handleChange, handleSubmit}: Props) => {
           href={"/dashboard/quotations/create"}
           className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
         >
-          New Quotation
+          New {module}
         </Link>
 
       </div>

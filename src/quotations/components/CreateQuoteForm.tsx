@@ -7,7 +7,7 @@ import { CancelButton } from "./CancelButton";
 import { create_token } from "@/app/auth/actions/auth-actions";
 
 const getCustomers = async (): Promise<Customer[]> => {
-      const authToken = await create_token();
+  const authToken = await create_token();
   const resp = await fetch("http://localhost:8080/api/customer/", {
     headers: {
       Authorization: authToken!,
@@ -16,12 +16,13 @@ const getCustomers = async (): Promise<Customer[]> => {
   return resp.json();
 };
 const getProducts = async (): Promise<Product[]> => {
-      const authToken = await create_token();
+  const authToken = await create_token();
   const resp = await fetch("http://localhost:8080/api/product", {
     headers: {
       Authorization: authToken!,
     },
   });
+
   return resp.json();
 };
 

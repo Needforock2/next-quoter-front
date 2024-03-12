@@ -39,3 +39,11 @@ body {
     margin: 0;
   }
 }
+
+.icon:hover ~ .tooltip-hidden {
+  display: block;
+}
+.tooltip-hidden {
+  position: absolut;
+  display: none;
+}

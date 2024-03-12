@@ -5,20 +5,22 @@ import { clearCookies, setCidCookie } from "../quotations-actions";
 
 interface Props {
   customers: Customer[];
-  quotedCustomer? : Customer
+  quotedCustomer?: Customer;
 }
 
 export const DropDownSearch = ({ customers, quotedCustomer }: Props) => {
   const [toggle, setToggle] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [customer, setCustomer] = useState<Customer>(quotedCustomer ||{
-    _id: "",
-    first_name: "",
-    last_name: "",
-    mail: "",
-    rut: "",
-    image: ''
-  });
+  const [customer, setCustomer] = useState<Customer>(
+    quotedCustomer || {
+      _id: "",
+      first_name: "",
+      last_name: "",
+      mail: "",
+      rut: "",
+      image: "",
+    }
+  );
 
   useEffect(() => {
     clearCookies();

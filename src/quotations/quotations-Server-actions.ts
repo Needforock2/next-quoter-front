@@ -9,10 +9,8 @@ interface ProdCookie {
   [id: string]: number;
 }
 
-
-
 export async function searchQuoteNmbr(id: number) {
-    const authToken = await create_token();
+  const authToken = await create_token();
   const quote = await fetch(
     `http://localhost:8080/api/quote?limit=5&page=1&quoteId=${id}`,
     {
@@ -24,10 +22,11 @@ export async function searchQuoteNmbr(id: number) {
   return quote.json();
 }
 
-export async function handlePaginator(nextPage: number | null) {
-    const authToken = await create_token();
+export async function handlePaginator(nextPage: number | null, route: string) {
+
+  const authToken = await create_token();
   const quotes = await fetch(
-    `http://localhost:8080/api/quote?limit=5&page=${nextPage}`,
+    `http://localhost:8080/api/${route}?limit=5&page=${nextPage}`,
     {
       headers: {
         Authorization: authToken!,
@@ -39,7 +38,7 @@ export async function handlePaginator(nextPage: number | null) {
 }
 
 export async function handleDeleteQuote(qid: string) {
-    const authToken = await create_token();
+  const authToken = await create_token();
   const response = await fetch(`http://localhost:8080/api/quote/${qid}`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json", Authorization: authToken! },
@@ -50,7 +49,7 @@ export async function handleDeleteQuote(qid: string) {
 }
 
 export async function sendQuoteToDb(qid: string) {
-      const authToken = await create_token();
+  const authToken = await create_token();
   const cookieStore = cookies();
   const prodListCookies = cookieStore.get("prodList");
   const customerCookie = cookieStore.get("cid");
@@ -76,17 +75,52 @@ export async function sendQuoteToDb(qid: string) {
     response = fetch("http://localhost:8080/api/quote/", {
       method: "POST",
       body: JSON.stringify(postBody),
-      headers: { "Content-Type": "application/json", Authorization: authToken! },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authToken!,
+      },
     }).then((res) => res.json());
   } else if (qid !== "") {
     response = fetch(`http://localhost:8080/api/quote/${qid}`, {
       method: "PUT",
       body: JSON.stringify(postBody),
-      headers: { "Content-Type": "application/json", Authorization: authToken! },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: authToken!,
+      },
     }).then((res) => res.json());
   }
 
   clearCookies();
+  return response;
+}
+
+export async function approveQuote(qid: string) {
+  const authToken = await create_token();
+  const body = {
+    status: "Approved",
+  };
+  const response = fetch(`http://localhost:8080/api/quote/${qid}`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json", Authorization: authToken! },
+  }).then((res) => res.json());
+  clearCookies();
+  revalidatePath("/dashboard/quotations");
+  return response;
+}
+export async function disApproveQuote(qid: string) {
+  const authToken = await create_token();
+  const body = {
+    status: "Pending",
+  };
+  const response = fetch(`http://localhost:8080/api/quote/${qid}`, {
+    method: "PUT",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json", Authorization: authToken! },
+  }).then((res) => res.json());
+  clearCookies();
+  revalidatePath("/dashboard/quotations");
   return response;
 }
 
