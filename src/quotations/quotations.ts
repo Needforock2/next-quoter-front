@@ -37,9 +37,10 @@ export interface SortedProduct {
   name: string;
   description: string;
   brand: string;
-  code: string;
+  code: number;
   price: number;
   pType: string;
+  stock: number;
   createdAt?: Date | undefined;
   updatedAt?: Date | undefined;
   quantity: number;
@@ -49,9 +50,9 @@ export interface Product {
   name: string;
   description: string;
   brand: string;
-  code: string;
+  code: number;
   price: number;
-  stock?: number;
+  stock: number;
   pType: string;
   createdAt?: Date | undefined;
   updatedAt?: Date | undefined;

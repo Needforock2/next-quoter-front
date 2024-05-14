@@ -56,7 +56,7 @@ export const CreateQuoteForm = async () => {
               </div>
             </div>
             <div className=" flex gap-3 justify-end">
-              <CancelButton />
+              <CancelButton module="quotations" />
               <CreateQuoteButton qid={""} />
             </div>
           </div>

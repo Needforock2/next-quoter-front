@@ -37,7 +37,7 @@ export const ProductItem = ({
       name: "",
       description: "",
       brand: "",
-      code: "",
+      code: 0,
       price: 0,
       stock: 0,
       pType: "",

@@ -40,7 +40,7 @@ export const CreateFilterBar = ({handleChange, handleSubmit, module}: Props) => 
       </div>
       <div className="lg:ml-40 ml-10 space-x-8">
         <Link
-          href={"/dashboard/quotations/create"}
+          href={`/dashboard/${module.toLowerCase()}/create`}
           className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer"
         >
           New {module}

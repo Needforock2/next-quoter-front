@@ -66,7 +66,7 @@ export const EditQuoteForm = async ({ quotation }: Props) => {
               </div>
             </div>
             <div className=" flex gap-3 justify-end">
-              <CancelButton />
+              <CancelButton module="quotations" />
               <CreateQuoteButton qid={quotation._id} />
             </div>
           </div>

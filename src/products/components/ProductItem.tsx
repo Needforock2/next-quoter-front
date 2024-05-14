@@ -3,27 +3,45 @@ import React from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import { deleteProduct } from "../actions/product-actions";
 import Swal from "sweetalert2";
+import { redirection } from "@/quotations/quotations-Server-actions";
 interface Props extends Product {}
 
 const ProductItem = ({ _id, code, name, brand, price, stock }: Props) => {
+  
+  const handleEdit = () => {
+    redirection(`/dashboard/products/edit/${_id}`);
+  }
     
-    const handleDelete = async () => {
-      const res = await deleteProduct(_id);
-      if (res.message === "Product deleted") {
-        Swal.fire({
-          title: "Success!",
-          text: res.message,
-          icon: "success",
-          confirmButtonText: "Cool",
-        });
-      } else {
-        Swal.fire({
-          title: "Error!",
-          text: "There is on error",
-          icon: "error",
-          confirmButtonText: "Confirm",
-        });
-      }
+  const handleDelete = async () => {
+       Swal.fire({
+         title: "Warning!",
+         text: "Do you want to delete this product?",
+         icon: "warning",
+         confirmButtonText: "Confirm",
+         showCancelButton: true,
+       }).then(async (result) => {
+         if (result.isConfirmed) {
+           const res = await deleteProduct(_id);
+           if (res.message === "Product deleted") {
+             Swal.fire({
+               title: "Success!",
+               text: res.message,
+               icon: "success",
+               confirmButtonText: "Cool",
+             });
+           } else {
+             Swal.fire({
+               title: "Error!",
+               text: "There is on error",
+               icon: "error",
+               confirmButtonText: "Confirm",
+             });
+           }
+           
+         }
+       });
+      
+      
     };
 
   const formattedPrice = new Intl.NumberFormat("us-US", {
@@ -52,7 +70,7 @@ const ProductItem = ({ _id, code, name, brand, price, stock }: Props) => {
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm col-span-1 flex items-center justify-center">
         <div className="flex items-center justify-center gap-4">
           <div>
-            <AiOutlineEdit size={20} className="hover:cursor-pointer icon " />
+            <AiOutlineEdit size={20} className="hover:cursor-pointer icon" onClick={()=>handleEdit()} />
             <div className="tooltip-hidden absolute z-50 whitespace-normal break-words rounded-lg border bg-slate-100 py-1.5 px-3 font-sans text-sm font-normal  focus:outline-none">
               Edit
             </div>

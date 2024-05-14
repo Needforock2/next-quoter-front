@@ -1,12 +1,16 @@
+'use client'
 import Image from "next/image";
 import React, { useState } from "react";
 import type { Quote } from "../quotations";
 
+
+
+
 import {
-  AiOutlineCheck,
-  AiOutlineCheckSquare,
+
   AiOutlineDelete,
   AiOutlineEdit,
+  AiOutlineSearch,
 } from "react-icons/ai";
 import {
   approveQuote,
@@ -19,6 +23,8 @@ import {
   MdOutlineCheckBox,
   MdOutlineCheckBoxOutlineBlank,
 } from "react-icons/md";
+
+
 
 interface Props extends Quote {}
 
@@ -35,28 +41,41 @@ export const QuoteItem = ({
   };
 
   const handleDelete = async () => {
-    const res = await handleDeleteQuote(_id);
+    
+    Swal.fire({
+      title: "Warning!",
+      text: "Do you want to Delete this Quote?",
+      icon: "warning",
+      confirmButtonText: "Confirm",
+      showCancelButton: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await handleDeleteQuote(_id);
+         if (res.message === "Quote deleted") {
+           Swal.fire({
+             title: "Success!",
+             text: res.message,
+             icon: "success",
+             confirmButtonText: "Cool",
+           });
+         } else {
+           Swal.fire({
+             title: "Error!",
+             text: "There is on error",
+             icon: "error",
+             confirmButtonText: "Confirm",
+           });
+         }
+      }
+    });
+ 
 
-    if (res.message === "Quote deleted") {
-      Swal.fire({
-        title: "Success!",
-        text: res.message,
-        icon: "success",
-        confirmButtonText: "Cool",
-      });
-      // redirection(`/dashboard`);
-    } else {
-      Swal.fire({
-        title: "Error!",
-        text: "There is on error",
-        icon: "error",
-        confirmButtonText: "Confirm",
-      });
-    }
+   
   };
 
   const handleApprove = async () => {
-    Swal.fire({
+
+      Swal.fire({
       title: "Warning!",
       text: "Do you want to Approve this Quote?",
       icon: "warning",
@@ -80,7 +99,7 @@ export const QuoteItem = ({
       if (result.isConfirmed) {
         const res = disApproveQuote(_id);
       }
-    });
+    }); 
   };
   const date = new Date(createdAt);
   const fullDate = `${date.getFullYear()}-${
@@ -132,7 +151,7 @@ export const QuoteItem = ({
         </span>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm col-span-1 flex items-center justify-center">
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-2 pr-4">
           <div>
             <AiOutlineEdit
               onClick={() => handleEdit(_id)}
@@ -176,6 +195,16 @@ export const QuoteItem = ({
               </div>
             </div>
           )}
+          <div>
+            <AiOutlineSearch
+              onClick={() => redirection(`/dashboard/quotations/view/${_id}`)}
+              size={20}
+              className="hover:cursor-pointer icon"
+            />
+            <div className="tooltip-hidden absolute z-50 right-6 whitespace-normal break-words rounded-lg border bg-slate-100 py-1.5 px-3 font-sans text-sm font-normal  focus:outline-none">
+              Preview
+            </div>
+          </div>
         </div>
       </td>
     </tr>

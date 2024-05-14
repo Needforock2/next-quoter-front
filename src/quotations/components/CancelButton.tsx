@@ -4,10 +4,12 @@ import { sendQuoteToDb, redirection } from "../quotations-Server-actions";
 import { clearCookies } from "../quotations-actions";
 import Swal from "sweetalert2";
 
-
-export const CancelButton = async () => {
+interface Props{
+  module: string
+}
+export const CancelButton =  ( {module}: Props) => {
   const handleClick = () => {
-      redirection('/dashboard/quotations')
+      redirection(`/dashboard/${module}`)
       clearCookies()
   };
   return (
